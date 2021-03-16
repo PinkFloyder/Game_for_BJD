@@ -2,29 +2,24 @@
 
 public class wood_view : MonoBehaviour
 {
-    public float step;
-    public Vector3 startPosition;
-    public Vector3 endPosition;
-    private float _progres;
-    
-    public volatile GameObject wood;
-    public volatile bool check = false;
-    
+    public GameObject material;
+    public bool click;
+
+    public float speed;
+    public Vector3 destination;
+    public Vector3 destination2;
+    void FixedUpdate()
+    {
+        if (click)
+        {
+            material.transform.position = Vector3.Lerp(material.transform.position, destination, speed);
+        }
+        else
+            material.transform.position = Vector3.Lerp(material.transform.position, destination2, speed);
+    }
 
     private void OnMouseDown()
     {
-        check = !check;
-    }
-
-    private void FixedUpdate()
-    {
-        if (check) { 
-            wood.transform.position = Vector3.Lerp(startPosition, endPosition, _progres);
-            _progres += step;
-        } 
-        else { 
-            wood.transform.position = Vector3.Lerp(startPosition, endPosition, _progres);
-            _progres -= step;
-        }
+        click = !click;
     }
 }

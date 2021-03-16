@@ -58,7 +58,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\big_view.cs" />
+     <Compile Include="Assets\Scripts\metall_view.cs" />
      <Compile Include="Assets\Scripts\rezina_view.cs" />
+     <Compile Include="Assets\Scripts\small_view.cs" />
      <Compile Include="Assets\Scripts\wood_view.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>/Users/macbook1/NewUnityProject/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
