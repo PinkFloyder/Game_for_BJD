@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Net.Mime;
 using System.Threading;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class rotate_up : MonoBehaviour
 {
@@ -10,7 +13,10 @@ public class rotate_up : MonoBehaviour
     public GameObject material;
     private GameObject res;
     public int delete_index;
+    private Renderer _renderer;
+    private Color _color;
     public bool click;
+    public TextMeshPro stop;
     
     public float speed;
     public Vector3 destination;
@@ -18,6 +24,9 @@ public class rotate_up : MonoBehaviour
     
     void Start()
     {
+        _renderer = GetComponent<Renderer>();
+        _color = _renderer.material.color;
+        
         res = GameObject.Find("result_background");
         
         list1.Add(GameObject.Find("wood_background"));
@@ -38,21 +47,42 @@ public class rotate_up : MonoBehaviour
         
     }
 
+    public void setClick()
+    {
+        if (!click)
+        {
+            stop.text = "Stop";
+            _renderer.material.color = Color.red;
+            if (list2[0].GetComponent<rotate_left>().click)
+                list2[0].GetComponent<rotate_left>().setClick();
+        }
+        else
+        {
+            list2[0].GetComponent<rotate_left>().setClick();
+            stop.text = "";
+            _renderer.material.color = _color;
+            
+        }
+        
+        click = !click;
+    }
+
     void OnMouseDown()
     {
         foreach (var o in list2)
         {
             if (o.GetComponent<rotate_left>().click)
-                o.GetComponent<rotate_left>().click = false;
+                o.GetComponent<rotate_left>().setClick();
         }
 
         foreach (var o in list1)
         {
             if (o.GetComponent<rotate_up>().click)
-                o.GetComponent<rotate_up>().click = false;
+                o.GetComponent<rotate_up>().setClick();
         }
         
-        click = !click;
+        setClick();
+        
         res.GetComponent<result_button>().getResult();
     } 
     

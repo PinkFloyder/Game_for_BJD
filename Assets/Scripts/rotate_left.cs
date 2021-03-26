@@ -9,6 +9,8 @@ public class rotate_left : MonoBehaviour
     public GameObject material;
     private GameObject res;
     public int delete_index;
+    private Renderer _renderer;
+    private Color _color;
     public bool click;
     
     public float speed;
@@ -17,6 +19,9 @@ public class rotate_left : MonoBehaviour
     
     void Start()
     {
+        _renderer = GetComponent<Renderer>();
+        _color = _renderer.material.color;
+        
         res = GameObject.Find("result_background");
         
         list2.Add(GameObject.Find("wood_background"));
@@ -36,14 +41,28 @@ public class rotate_left : MonoBehaviour
         
         res.GetComponent<result_button>().getResult();
     }
+    
+    public void setClick()
+    {
+        if (!click)
+        {
+            _renderer.material.color = Color.red;
+        }
+        else
+        {
+            _renderer.material.color = _color;
+        }
+        click = !click;
+    }
 
     public void OnMouseDown()
     {
+        if (click) return;
         foreach (var o in list1)
         {
             if (o.GetComponent<rotate_left>().click)
             {
-                o.GetComponent<rotate_left>().click = false;
+                o.GetComponent<rotate_left>().setClick();
                 break;
             }
         }
@@ -54,7 +73,7 @@ public class rotate_left : MonoBehaviour
                 return;
         }
 
-        click = !click;
+        setClick();
         res.GetComponent<result_button>().getResult();
     } 
     
